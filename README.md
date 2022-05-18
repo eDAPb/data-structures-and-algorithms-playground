@@ -37,7 +37,7 @@
 
 ---
 ### Resources
-#### [Booksite.](http://www.algs4.princeton.edu)
+#### [Booksite.](https://algs4.cs.princeton.edu/home/)
 - Lecture slides.
 - Download code.
 - Summary of content.
