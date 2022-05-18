@@ -28,7 +28,7 @@
 - Programming and problem-solving, in the context of real applications.
 - **Algorithm:** method for solving a problem.
 - **Data structure:** method to store information.
-- The course is split into parts, classic data type sorting and searching, and then more advanced algorithms developed from the aforementioned.
+- The course is split into two parts, classic data type sorting and searching, and then more advanced algorithms developed from the aforementioned.
 
 ### Prerequisites
 - Programming: loops, arrays functions, objects, recursion.
