@@ -55,7 +55,7 @@
 
 - Install [Maven](https://maven.apache.org/download.cgi) and setup environment variables.
 - Insert a dependency in the pom.xml. This repository already has a preconfigured one with its tags.
-- Run the command to create a local Maven repository for algs4.
+- With your environment variables done open your terminal. Run the following command to create a local Maven repository for algs4.
 > mvn install:install-file -Dfile=***Directory***\algs4.jar -DgroupId=edu.princeton.cs -DartifactId=algs4 -Dversion=dev -Dpackaging=jar
 
 **Make sure to replace "Directory" with where you saved algs4.jar**
