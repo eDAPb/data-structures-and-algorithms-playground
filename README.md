@@ -70,8 +70,8 @@
 ```
 
 - With the dependency now present, run the following command to create a local Maven repository for algs4.
-  **Make sure to replace "Directory" with where you saved the algs4.jar**
-> mvn install:install-file -Dfile=**Directory**/algs4.jar -DgroupId=edu.princeton.cs -DartifactId=algs4 -Dversion=dev -Dpackaging=jar -Dsources=**Directory**/algs4.jar -Durl=https://algs4.cs.princeton.edu/code/javadoc/ -Dclassifier=javadoc
+  **Make sure to replace "Directory" with where you saved the algs4.jar and are in the project directory.**
+> mvn install:install-file -Dfile=*Directory*/algs4.jar -DgroupId=edu.princeton.cs -DartifactId=algs4 -Dversion=dev -Dpackaging=jar -Dsources=*Directory*/algs4.jar -Durl=https://algs4.cs.princeton.edu/code/javadoc/ -Dclassifier=javadoc
 
 - That should be it! Now try to import one of the classes from the algs4 library.
 ```java
