@@ -62,7 +62,7 @@
 > ~/apache-maven/bin
 - Add the *M2_HOME* variable to the system *PATH* variable as:
 > %M2_HOME%
-- Your IDE most likely already has a method of creating a Maven Project. If you do generate your own add the following depedency to your *pom.xml*.
+- Your IDE most likely already has a method of creating a Maven Project. If you do generate your own add the following depedency to the *pom.xml*.
 
 *Inserting the dependency in the pom.xml is only necessary if you do not clone this repository*
 
