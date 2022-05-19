@@ -55,9 +55,16 @@
 
 *Quick Setup*
 
-- We are assuming you have your [JDK11](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html) variables already setup.
-- Install [Maven](https://maven.apache.org/download.cgi) and setup the environment variables.
-- Insert a new dependency in the pom.xml. This repository already has a preconfigured one.
+- We are assuming you have your [JDK11](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html) environment variables already setup.
+- Make sure to create a system variable *CLASSPATH* that points to the following to ensure the program can be run and compiled in the terminal. **"~" signifies the location where the file or directory exists.**
+> .;~/algs4.jar
+- Download [Maven](https://maven.apache.org/download.cgi) and create an *M2_HOME* system environment variable that points to the bin directory.
+> ~/apache-maven/bin
+- Add the *M2_HOME* variable to the system *PATH* variable as:
+> %M2_HOME%
+- Your IDE most likely already has a method of creating a Maven Project. If you do generate your own add the following depedency to your *pom.xml*.
+
+*Inserting the dependency in the pom.xml is only necessary if you do not clone this repository*
 
 ```xml
 <dependencies>
@@ -70,8 +77,7 @@
 ```
 
 - With the dependency now present, run the following command to create a local Maven repository for algs4.
-  **Make sure to replace "Directory" with where you saved the algs4.jar and are in the project directory.**
-> mvn install:install-file -Dfile=*Directory*/algs4.jar -DgroupId=edu.princeton.cs -DartifactId=algs4 -Dversion=dev -Dpackaging=jar -Dsources=*Directory*/algs4.jar -Durl=https://algs4.cs.princeton.edu/code/javadoc/ -Dclassifier=javadoc
+> mvn install:install-file -Dfile=**~**/algs4.jar -DgroupId=edu.princeton.cs -DartifactId=algs4 -Dversion=dev -Dpackaging=jar -Dsources=**~**/algs4.jar -Durl=https://algs4.cs.princeton.edu/code/javadoc/ -Dclassifier=javadoc
 
 - That should be it! Now try to import one of the classes from the algs4 library.
 ```java
