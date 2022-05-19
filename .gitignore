@@ -1,4 +1,5 @@
-# Default ignored files
+# Default ignored files and directories
 /.idea/
 /out/
 /target/
+*.class

@@ -1,4 +1,4 @@
-package edapb.algorithms;
+package edapb.algorithms.assignment0;
 
 public class HelloWorld {
     public static void main(String[] args) {
