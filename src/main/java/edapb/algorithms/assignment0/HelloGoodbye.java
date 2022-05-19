@@ -2,8 +2,8 @@ package edapb.algorithms.assignment0;
 
 public class HelloGoodbye {
     public static void main(String[] args) {
-        final int MIN_NUM_OF_NAMES = 2;
-        if (args.length < MIN_NUM_OF_NAMES)
+        final int minNumOfNames = 2;
+        if (args.length < minNumOfNames)
             return;
 
         System.out.println("Hello " + args[0] + " and " + args[1] + ".");
