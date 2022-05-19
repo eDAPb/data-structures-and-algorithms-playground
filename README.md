@@ -32,7 +32,7 @@
 
 ### Prerequisites
 - Programming: loops, arrays functions, objects, recursion.
-- Java: used as expository language.
+- Java: used as an expository language.
 - Mathematics: high-school algebra.
 
 ---
@@ -47,15 +47,41 @@
 - More topics
 > **ISBN 0-321-57351-X**
 
+---
+
 #### [algs4.jar](https://algs4.cs.princeton.edu/code/)
 - Important library used throughout the course to implement solutions.
-- A local repository is necessary to use with Maven.
+- A local Maven repository is necessary to use it with Maven.
 
 *Quick Setup*
 
-- Install [Maven](https://maven.apache.org/download.cgi) and setup environment variables.
-- Insert a dependency in the pom.xml. This repository already has a preconfigured one with its tags.
-- With your environment variables done open your terminal. Run the following command to create a local Maven repository for algs4.
-> mvn install:install-file -Dfile=***Directory***\algs4.jar -DgroupId=edu.princeton.cs -DartifactId=algs4 -Dversion=dev -Dpackaging=jar
+- We are assuming you have your [JDK11](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html) variables already setup.
+- Install [Maven](https://maven.apache.org/download.cgi) and setup the environment variables.
+- Insert a new dependency in the pom.xml. This repository already has a preconfigured one.
 
-**Make sure to replace "Directory" with where you saved algs4.jar**
+```xml
+<dependencies>
+  <dependency>
+    <groupId>edu.princeton.cs</groupId>
+    <artifactId>algs4</artifactId>
+    <version>dev</version>
+  </dependency>
+</dependencies>
+```
+
+- With the dependency now present, run the following command to create a local Maven repository for algs4.
+  **Make sure to replace "Directory" with where you saved the algs4.jar and are in the project directory.**
+> mvn install:install-file -Dfile=*Directory*/algs4.jar -DgroupId=edu.princeton.cs -DartifactId=algs4 -Dversion=dev -Dpackaging=jar -Dsources=*Directory*/algs4.jar -Durl=https://algs4.cs.princeton.edu/code/javadoc/ -Dclassifier=javadoc
+
+- That should be it! Now try to import one of the classes from the algs4 library.
+```java
+import edu.princeton.cs.algs4.StdIn;
+
+public class RandomWord {
+  public static void main(String[] args) {
+    while (StdIn.isEmpty()) {
+      // ...
+    }
+  }
+}
+```
