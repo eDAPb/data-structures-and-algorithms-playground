@@ -13,6 +13,14 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>edu.princeton.cs</groupId>
