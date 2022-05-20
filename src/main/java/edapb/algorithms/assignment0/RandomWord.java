@@ -1,13 +1,3 @@
-/**
- * RandomWord.java is a program that reads a sequence of words from standard
- * input and prints one of those words uniformly at random.
- *
- * The Knuth's method selects the ith word with a probability of 1/i to be
- * champion avoiding the use of arrays.
- *
- * @author Elian
- * @version 5.19.22
- */
 package edapb.algorithms.assignment0;
 
 import edu.princeton.cs.algs4.StdIn;
