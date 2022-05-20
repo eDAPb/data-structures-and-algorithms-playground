@@ -37,14 +37,14 @@
 
 ---
 ### Resources
-#### [Booksite.](https://algs4.cs.princeton.edu/home/)
+#### [Booksite](https://algs4.cs.princeton.edu/home/)
 - Lecture slides.
 - Download code.
 - Summary of content.
 
 #### Textbook (optional)
-- More extensive coverage of topics
-- More topics
+- More extensive coverage of topics.
+- More topics.
 > **ISBN 0-321-57351-X**
 
 ---
@@ -94,4 +94,4 @@ public class RandomWord {
 
 ---
 
-#### [Common questions regarding first time use](https://www.coursera.org/learn/algorithms-part1/discussions/forums/h-afoca0Eea9BxKnbLNeHg/threads/5G9HRPV0EemlYRLGbZc2cA)
+#### [Common questions regarding first time use.](https://www.coursera.org/learn/algorithms-part1/discussions/forums/h-afoca0Eea9BxKnbLNeHg/threads/5G9HRPV0EemlYRLGbZc2cA)
