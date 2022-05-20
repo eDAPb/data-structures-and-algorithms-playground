@@ -94,4 +94,4 @@ public class RandomWord {
 
 ---
 
-#### [Common questions regarding the algs4 library]()
+#### [Common questions regarding first time use](https://www.coursera.org/learn/algorithms-part1/discussions/forums/h-afoca0Eea9BxKnbLNeHg/threads/5G9HRPV0EemlYRLGbZc2cA)
