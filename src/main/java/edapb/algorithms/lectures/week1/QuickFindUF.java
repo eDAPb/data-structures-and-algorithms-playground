@@ -1,4 +1,4 @@
-package edapb.algorithms.notes.week1;
+package edapb.algorithms.lectures.week1;
 
 public class QuickFindUF {
     private final int[] id;
@@ -16,7 +16,7 @@ public class QuickFindUF {
     }
 
     // Go through array n times set to qId if pId
-    // Quadratic time algorithm very slow
+    // Do N unions would quadratic time the algorithm is very slow with huge problems.
     public void union(int p, int q) {
         int pId = id[p];
         int qId = id[q];
