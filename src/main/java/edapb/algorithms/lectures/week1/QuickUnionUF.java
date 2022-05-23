@@ -11,6 +11,7 @@ public class QuickUnionUF {
     }
 
     // Chase the parent pointers until reach root.
+    // Linear time complexity with the longest possible tree.
     private int root(int i) {
         while (i != id[i]) {
             // Go up one level in the tree
