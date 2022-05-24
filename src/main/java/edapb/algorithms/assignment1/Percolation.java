@@ -11,6 +11,7 @@ public class Percolation {
 
     private WeightedQuickUnionUF idsUF;
     private int[] status;
+    private int numOfOpenSites;
 
     public Percolation(final int n) {
         if (n <= 0) {
@@ -21,12 +22,13 @@ public class Percolation {
         final int size = n*n;
         idsUF = new WeightedQuickUnionUF(size);
         status = new int[size];
+        numOfOpenSites = 0;
 
         // Spawn top and bottom nodes beyond border.
         sideLength = n;
         topNode = 0;
         status[topNode] = open;
-        bottomNode = n*n + 1;
+        bottomNode = n * n + 1;
         status[bottomNode] = open;
     }
 
@@ -58,16 +60,21 @@ public class Percolation {
         // Don't have to worry about going up or down since we'll hit top or bottom node no matter what.
         int[] indexes = new int[5];
         indexes[0] = toIndex(row, col);
-        indexes[1] = toIndex(row + 1, col);
-        indexes[2] = toIndex(row - 1, col);
-        indexes[3] = inRange(row, col + 1) ? toIndex(row, col + 1) : -1;
-        indexes[4] = inRange(row, col - 1) ? toIndex(row, col - 1) : -1;
+        ++numOfOpenSites;
+        indexes[1] = toIndex(row + 1, col); // Down
+        indexes[2] = toIndex(row - 1, col); // Up
+        indexes[3] = inRange(row, col + 1) ? toIndex(row, col + 1) : -1; // Right
+        indexes[4] = inRange(row, col - 1) ? toIndex(row, col - 1) : -1; // Left
         status[indexes[0]] = open;
         for (int i : indexes) {
             if (i != -1 && status[i] == open) {
                 idsUF.union(indexes[0], i);
             }
         }
+    }
+
+    public int numberOfOpenSites() {
+        return numOfOpenSites;
     }
 
     public boolean isOpen(int row, int col) {
