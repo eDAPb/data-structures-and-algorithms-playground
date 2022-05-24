@@ -21,11 +21,12 @@ public class Percolation {
         final int size = n*n;
         idsUF = new WeightedQuickUnionUF(size);
         status = new int[size];
-        sideLength = n;
+
         // Spawn top and bottom nodes beyond border.
+        sideLength = n;
         topNode = 0;
         status[topNode] = open;
-        bottomNode = sideLength + 1;
+        bottomNode = n*n + 1;
         status[bottomNode] = open;
     }
 
@@ -39,15 +40,34 @@ public class Percolation {
         }
     }
     private int toIndex(int row, int col) {
+        // Lets us internally access the top and bottom node.
+        if (row == 0) {
+            return topNode;
+        }
+
+        if (row == sideLength + 1) {
+            return bottomNode;
+        }
+
         // First element is at (1, 1) -> arr[1]
         // We do -1 to maintain ourselves on the first row when row 1 is asked for.
-        return (row - 1) * sideLength + col;
+        return (row - 1) * sideLength + col; // separate
     }
     public void open(int row, int col) {
         enforceRange(row, col);
-
-        status[toIndex(row, col)] = open;
-        // Implement unification of surrounding already opened nodes.
+        // Don't have to worry about going up or down since we'll hit top or bottom node no matter what.
+        int[] indexes = new int[5];
+        indexes[0] = toIndex(row, col);
+        indexes[1] = toIndex(row + 1, col);
+        indexes[2] = toIndex(row - 1, col);
+        indexes[3] = inRange(row, col + 1) ? toIndex(row, col + 1) : -1;
+        indexes[4] = inRange(row, col - 1) ? toIndex(row, col - 1) : -1;
+        status[indexes[0]] = open;
+        for (int i : indexes) {
+            if (i != -1 && status[i] == open) {
+                idsUF.union(indexes[0], i);
+            }
+        }
     }
 
     public boolean isOpen(int row, int col) {
