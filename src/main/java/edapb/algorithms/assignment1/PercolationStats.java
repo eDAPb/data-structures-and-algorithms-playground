@@ -15,7 +15,7 @@ public class PercolationStats {
         for (int t = 0; t < trials; ++t) {
             Percolation perc = new Percolation(n);
             while (!perc.percolates()) {
-                perc.open(StdRandom.uniform(1, n), StdRandom.uniform(1, n));
+                perc.open(StdRandom.uniform(1, n + 1), StdRandom.uniform(1, n + 1));
             }
             thresholds[t] = (double)perc.numberOfOpenSites() / n;
         }
