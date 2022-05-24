@@ -9,7 +9,7 @@ public class Percolation {
     private final int topNode;
     private final int bottomNode;
 
-    private WeightedQuickUnionUF ids;
+    private WeightedQuickUnionUF idsUF;
     private int[] status;
 
     public Percolation(final int n) {
@@ -19,7 +19,7 @@ public class Percolation {
 
         // Using one dimensional array as grid.
         final int size = n*n;
-        ids = new WeightedQuickUnionUF(size);
+        idsUF = new WeightedQuickUnionUF(size);
         status = new int[size];
         sideLength = n;
         // Keep top bottom opened by default.
@@ -44,6 +44,7 @@ public class Percolation {
         }
 
         status[i] = open;
+
         // Implement unification of surrounding already opened nodes.
 
     }
