@@ -17,11 +17,15 @@ public class Percolation {
         height = n;
     }
 
-    private void enforceAndConvert(int row, int col) {
-
+    private void enforceRange(int row, int col) {
+        if (row <= 0 || row > height || col <= 0 || col >= width) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public void open(int row, int col) {
+        enforceRange(row, col);
         grid[row][col] = open;
     }
+
 }
