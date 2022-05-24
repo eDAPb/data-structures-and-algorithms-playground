@@ -22,37 +22,41 @@ public class Percolation {
         idsUF = new WeightedQuickUnionUF(size);
         status = new int[size];
         sideLength = n;
-        // Keep top bottom opened by default.
+        // Spawn top and bottom nodes beyond border.
         topNode = 0;
         status[topNode] = open;
         bottomNode = sideLength + 1;
         status[bottomNode] = open;
     }
 
-    private int toIndex(int row, int col) {
-        if (row <= 0 || row > sideLength || col <= 0 || col >= sideLength) {
+    private boolean inRange(int row, int col) {
+        return row > 0 && row <= sideLength && col > 0 && col <= sideLength;
+    }
+
+    private void enforceRange(int row, int col) {
+        if (!inRange(row, col)) {
             throw new IllegalArgumentException();
         }
+    }
+    private int toIndex(int row, int col) {
         // First element is at (1, 1) -> arr[1]
         // We do -1 to maintain ourselves on the first row when row 1 is asked for.
         return (row - 1) * sideLength + col;
     }
     public void open(int row, int col) {
-        int i = toIndex(row, col);
-        if (status[i] == open) {
-            return;
-        }
+        enforceRange(row, col);
 
-        status[i] = open;
+        status[toIndex(row, col)] = open;
         // Implement unification of surrounding already opened nodes.
-
     }
 
     public boolean isOpen(int row, int col) {
+        enforceRange(row, col);
         return status[toIndex(row, col)] == open;
     }
 
     public boolean isFull(int row, int col) {
+        enforceRange(row, col);
         return status[toIndex(row, col)] == full;
     }
 
