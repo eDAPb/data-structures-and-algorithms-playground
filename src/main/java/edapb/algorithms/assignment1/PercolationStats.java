@@ -13,21 +13,24 @@ public class PercolationStats {
             throw new IllegalArgumentException();
         }
 
+        // Do trials
         double[] thresholds = new double[trials];
         for (int t = 0; t < trials; ++t) {
             Percolation perc = new Percolation(n);
 
             while (!perc.percolates()) {
-                perc.open(StdRandom.uniform(1, n + 1), StdRandom.uniform(1, n + 1));
+                perc.open(StdRandom.uniform(1, n + 1),
+                          StdRandom.uniform(1, n + 1));
             }
 
             thresholds[t] = (double)perc.numberOfOpenSites() / (n * n);
         }
 
+        // Calculate stats
         mean = StdStats.mean(thresholds);
         stddev = StdStats.stddev(thresholds);
-        final double zScore = 1.96; // 95% confidence interval
-        final double modifier = (zScore * stddev) / Math.sqrt(trials);
+        // 1.96 -> zScore for 95% confidence interval
+        final double modifier = (1.96 * stddev) / Math.sqrt(trials);
         confidenceHi = mean + modifier;
         confidenceLo = mean - modifier;
     }
@@ -46,5 +49,27 @@ public class PercolationStats {
 
     public double confidenceHi() {
         return confidenceHi;
+    }
+
+    public static void main(String[] args) {
+        if (args.length < 2) {
+            return;
+        }
+
+        int n;
+        int trials;
+        try {
+            n = Integer.parseInt(args[0]);
+            trials = Integer.parseInt(args[1]);
+        } catch (NumberFormatException err) {
+            System.out.println("Please pass integers to the program.");
+            return;
+        }
+
+        PercolationStats percStats = new PercolationStats(n, trials);
+        System.out.printf("%-24s= %f%n", "mean", percStats.mean());
+        System.out.printf("%-24s= %f%n", "stddev", percStats.stddev());
+        System.out.printf("%-24s= [%f, %f]%n", "95% confidence interval",
+                percStats.confidenceLo(), percStats.confidenceHi());
     }
 }

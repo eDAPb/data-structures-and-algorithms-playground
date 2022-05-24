@@ -3,8 +3,7 @@ package edapb.algorithms.assignment1;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    private final int full = 0;
-    private final int open = 1;
+    private static final int open = 1;
     private final int sideLength;
     private final int topNode;
     private final int bottomNode;
@@ -66,11 +65,16 @@ public class Percolation {
         ++numOfOpenSites;
 
         // Check top, bottom, left, right for open nodes to connect to.
-        // Don't have to worry about going up or down since we'll hit top or bottom node no matter what.
-        indexes[1] = toIndex(row + 1, col); // Down
-        indexes[2] = toIndex(row - 1, col); // Up
-        indexes[3] = inRange(row, col + 1) ? toIndex(row, col + 1) : -1; // Right
-        indexes[4] = inRange(row, col - 1) ? toIndex(row, col - 1) : -1; // Left
+        // Don't have to worry about going up or down since we'll hit top or
+        // bottom node no matter what.
+        // Up
+        indexes[2] = toIndex(row - 1, col);
+        // Down
+        indexes[1] = toIndex(row + 1, col);
+        // Right
+        indexes[3] = inRange(row, col + 1) ? toIndex(row, col + 1) : -1;
+        // Left
+        indexes[4] = inRange(row, col - 1) ? toIndex(row, col - 1) : -1;
 
         for (int i : indexes) {
             if (i != -1 && status[i] == open) {
