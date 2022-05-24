@@ -57,10 +57,10 @@ public class Percolation {
     }
     public void open(int row, int col) {
         enforceRange(row, col);
-        // Don't have to worry about going up or down since we'll hit top or bottom node no matter what.
         int[] indexes = new int[5];
         indexes[0] = toIndex(row, col);
         ++numOfOpenSites;
+        // Don't have to worry about going up or down since we'll hit top or bottom node no matter what.
         indexes[1] = toIndex(row + 1, col); // Down
         indexes[2] = toIndex(row - 1, col); // Up
         indexes[3] = inRange(row, col + 1) ? toIndex(row, col + 1) : -1; // Right
