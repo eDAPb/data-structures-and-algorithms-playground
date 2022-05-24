@@ -1,5 +1,6 @@
 package edapb.algorithms.assignment1;
 
+import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
@@ -14,7 +15,7 @@ public class PercolationStats {
         for (int t = 0; t < trials; ++t) {
             Percolation perc = new Percolation(n);
             while (!perc.percolates()) {
-
+                perc.open(StdRandom.uniform(1, n), StdRandom.uniform(1, n));
             }
             thresholds[t] = (double)perc.numberOfOpenSites() / n;
         }
