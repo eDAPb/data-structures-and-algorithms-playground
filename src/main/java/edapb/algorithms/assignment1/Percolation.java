@@ -24,7 +24,7 @@ public class Percolation {
         status = new int[size];
         numOfOpenSites = 0;
 
-        // Spawn top and bottom nodes beyond border.
+        // Spawn top and bottom virtual nodes.
         sideLength = n;
         topNode = 0;
         status[topNode] = open;
@@ -64,11 +64,14 @@ public class Percolation {
         indexes[0] = toIndex(row, col);
         status[indexes[0]] = open;
         ++numOfOpenSites;
+
+        // Check top, bottom, left, right for open nodes to connect to.
         // Don't have to worry about going up or down since we'll hit top or bottom node no matter what.
         indexes[1] = toIndex(row + 1, col); // Down
         indexes[2] = toIndex(row - 1, col); // Up
         indexes[3] = inRange(row, col + 1) ? toIndex(row, col + 1) : -1; // Right
         indexes[4] = inRange(row, col - 1) ? toIndex(row, col - 1) : -1; // Left
+
         for (int i : indexes) {
             if (i != -1 && status[i] == open) {
                 idsUF.union(i, indexes[0]);
