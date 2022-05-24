@@ -6,8 +6,8 @@ public class Percolation {
     private final int full = 0;
     private final int open = 1;
     private final int sideLength;
-    private final int top;
-    private final int bottom;
+    private final int topNode;
+    private final int bottomNode;
 
     private WeightedQuickUnionUF ids;
     private int[] status;
@@ -22,8 +22,11 @@ public class Percolation {
         ids = new WeightedQuickUnionUF(size);
         status = new int[size];
         sideLength = n;
-        top = 0;
-        bottom = sideLength + 1;
+        // Keep top bottom opened by default.
+        topNode = 0;
+        status[topNode] = open;
+        bottomNode = sideLength + 1;
+        status[bottomNode] = open;
     }
 
     private int toIndex(int row, int col) {
@@ -41,6 +44,8 @@ public class Percolation {
         }
 
         status[i] = open;
+        // Implement unification of surrounding already opened nodes.
+
     }
 
     public boolean isOpen(int row, int col) {
