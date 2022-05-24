@@ -68,7 +68,7 @@ public class Percolation {
         status[indexes[0]] = open;
         for (int i : indexes) {
             if (i != -1 && status[i] == open) {
-                idsUF.union(indexes[0], i);
+                idsUF.union(i, indexes[0]);
             }
         }
     }
