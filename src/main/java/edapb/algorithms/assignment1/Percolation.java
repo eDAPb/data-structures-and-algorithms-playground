@@ -5,8 +5,9 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
     private final int full = 0;
     private final int open = 1;
-    private final int width;
-    private final int height;
+    private final int sideWidth;
+    private final int top;
+    private final int bottom;
 
     private WeightedQuickUnionUF ids;
     private int[] status;
@@ -20,20 +21,26 @@ public class Percolation {
         final int size = n*n;
         ids = new WeightedQuickUnionUF(size);
         status = new int[size];
-        width = n;
-        height = n;
+        sideWidth = n;
+        top = 0;
+        bottom = sideWidth + 1;
     }
 
     private int toIndex(int row, int col) {
-        if (row <= 0 || row > height || col <= 0 || col >= width) {
+        if (row <= 0 || row > sideWidth || col <= 0 || col >= sideWidth) {
             throw new IllegalArgumentException();
         }
-        // First element is at (1, 1).
+        // First element is at (1, 1) -> arr[1]
         // We do -1 to maintain ourselves on the first row when row 1 is asked for.
-        return (row - 1) * width + col;
+        return (row - 1) * sideWidth + col;
     }
     public void open(int row, int col) {
-        status[toIndex(row, col)] = open;
+        int i = toIndex(row, col);
+        if (status[i] == open) {
+            return;
+        }
+
+        status[i] = open;
     }
 
     public boolean isOpen(int row, int col) {
