@@ -84,7 +84,7 @@ public class Percolation {
 
     public boolean isFull(int row, int col) {
         enforceRange(row, col);
-        return status[toIndex(row, col)] == full;
+        return idsUF.find(toIndex(row, col)) == idsUF.find(topNode);
     }
 
     public boolean percolates() {
