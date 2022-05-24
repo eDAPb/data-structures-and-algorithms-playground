@@ -56,7 +56,10 @@ public class Percolation {
         return (row - 1) * sideLength + col; // separate
     }
     public void open(int row, int col) {
-        enforceRange(row, col);
+        if (isOpen(row, col)) {
+            return;
+        }
+
         int[] indexes = new int[5];
         indexes[0] = toIndex(row, col);
         ++numOfOpenSites;
