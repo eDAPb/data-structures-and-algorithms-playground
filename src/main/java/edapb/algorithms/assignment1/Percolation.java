@@ -8,9 +8,17 @@ public class Percolation {
 
     private int[][] grid;
     public Percolation(final int n) {
+        if (n <= 0) {
+            throw new IllegalArgumentException();
+        }
+
         grid = new int[n][n];
         width = n;
         height = n;
+    }
+
+    private void enforceAndConvert(int row, int col) {
+
     }
 
     public void open(int row, int col) {
