@@ -44,7 +44,6 @@ public class Percolation {
         }
 
         status[i] = open;
-
         // Implement unification of surrounding already opened nodes.
 
     }
@@ -55,5 +54,9 @@ public class Percolation {
 
     public boolean isFull(int row, int col) {
         return status[toIndex(row, col)] == full;
+    }
+
+    public boolean percolates() {
+        return idsUF.find(topNode) == idsUF.find(bottomNode);
     }
 }
