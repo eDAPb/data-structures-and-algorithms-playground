@@ -62,13 +62,13 @@ public class Percolation {
 
         int[] indexes = new int[5];
         indexes[0] = toIndex(row, col);
+        status[indexes[0]] = open;
         ++numOfOpenSites;
         // Don't have to worry about going up or down since we'll hit top or bottom node no matter what.
         indexes[1] = toIndex(row + 1, col); // Down
         indexes[2] = toIndex(row - 1, col); // Up
         indexes[3] = inRange(row, col + 1) ? toIndex(row, col + 1) : -1; // Right
         indexes[4] = inRange(row, col - 1) ? toIndex(row, col - 1) : -1; // Left
-        status[indexes[0]] = open;
         for (int i : indexes) {
             if (i != -1 && status[i] == open) {
                 idsUF.union(i, indexes[0]);
