@@ -19,7 +19,7 @@ public class Percolation {
         }
 
         // Using one dimensional array as grid.
-        final int size = n*n;
+        final int size = n * n + 1;
         idsUF = new WeightedQuickUnionUF(size);
         status = new int[size];
         numOfOpenSites = 0;
