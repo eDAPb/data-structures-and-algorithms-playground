@@ -32,5 +32,7 @@ public class Percolation {
         return grid[row][col] == open;
     }
 
-
+    public boolean isFull(int row, int col) {
+        return grid[row][col] == full;
+    }
 }
