@@ -9,8 +9,8 @@ public class Percolation {
     private final int topNode;
     private final int bottomNode;
 
-    private WeightedQuickUnionUF idsUF;
-    private int[] status;
+    private final WeightedQuickUnionUF idsUF;
+    private final int[] status;
     private int numOfOpenSites;
 
     public Percolation(final int n) {
