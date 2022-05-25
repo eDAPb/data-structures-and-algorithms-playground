@@ -3,14 +3,18 @@ package edapb.algorithms.assignment1;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    private static final int OPEN = 1;
+    private static final byte CLOSE = 0b0000; // 0
+    private static final byte OPEN = 0b0001; // 1
+    private static final byte TOP_CONN = 0b0010; // 2
+    private static final byte BOTTOM_CONN = 0b0100; // 4
+    private static final byte PERCOLATION = 0b0111; // 7
     private final int sideLength;
     private final int topNode;
 
     private final WeightedQuickUnionUF idsUF;
     private final byte[] status;
-    private final int[] openedLastRowNodes;
     private int numOfOpenSites;
+    private boolean percolates;
 
     public Percolation(final int n) {
         if (n <= 0) {
@@ -24,15 +28,11 @@ public class Percolation {
         status = new byte[size];
         // We will track opened bottom nodes and check if they are full to
         // confirm for percolation later. First index reserved for counting.
-        openedLastRowNodes = new int[n + 1];
-        for (int i = 1; i < openedLastRowNodes.length; ++i) {
-            openedLastRowNodes[i] = -1;
-        }
         numOfOpenSites = 0;
 
         // Spawn top virtual node.
         topNode = 0;
-        status[topNode] = OPEN;
+        status[topNode] = TOP_CONN;
     }
 
     private boolean inRange(int row, int col) {
@@ -45,7 +45,7 @@ public class Percolation {
         }
     }
     private int toIndex(int row, int col) {
-        // Lets us internally access the top and bottom node.
+        // Lets us internally access the top node.
         if (row == 0) {
             return topNode;
         }
@@ -65,30 +65,43 @@ public class Percolation {
 
         int[] indexes = new int[5];
         indexes[0] = toIndex(row, col);
-        status[indexes[0]] = OPEN;
+        final int bottomRow = (sideLength - 1) * sideLength;
+        if (indexes[0] <= sideLength) {
+            status[indexes[0]] = TOP_CONN;
+        } else if (indexes[0] > bottomRow) {
+            status[indexes[0]] = BOTTOM_CONN;
+        } else {
+            status[indexes[0]] = OPEN;
+        }
         ++numOfOpenSites;
 
-        // Check top, bottom, left, right for OPEN nodes to connect to.
-        // Makes sure they are in range by checking for -1
+        // Check for adjacent nodes, toIndex returns -1 if not found.
         // Up
-        indexes[2] = toIndex(row - 1, col);
+        indexes[1] = toIndex(row - 1, col);
         // Down
-        indexes[1] = toIndex(row + 1, col);
+        indexes[2] = toIndex(row + 1, col);
         // Right
         indexes[3] = toIndex(row, col + 1);
         // Left
         indexes[4] = toIndex(row, col - 1);
 
-        final int lastRow = (sideLength - 1) * sideLength;
-        final byte inArray = 2;
+        byte statusGen = CLOSE;
         for (int i : indexes) {
-            if (i != -1 && status[i] >= OPEN) {
-                idsUF.union(i, indexes[0]);
-                if (status[i] != inArray && i > lastRow) {
-                    status[i] = inArray;
-                    openedLastRowNodes[++openedLastRowNodes[0]] = i;
-                }
+            if (i != -1) {
+                statusGen = (byte) (statusGen | status[i]);
+                System.out.println(statusGen);
             }
+        }
+
+        for (int i : indexes) {
+            if (i != -1 && status[i] != CLOSE) {
+                status[i] = statusGen;
+                idsUF.union(i, indexes[0]);
+            }
+        }
+
+        if (status[indexes[0]] == PERCOLATION) {
+            percolates = true;
         }
     }
 
@@ -103,18 +116,17 @@ public class Percolation {
 
     public boolean isFull(int row, int col) {
         enforceRange(row, col);
-        return idsUF.find(topNode) == idsUF.find(toIndex(row, col));
+        int i = toIndex(row, col);
+        boolean isFull = (status[i] >= OPEN) &&
+                (idsUF.find(topNode) == idsUF.find(i));
+        if (isFull && status[i] == BOTTOM_CONN) {
+            status[i] = PERCOLATION;
+        }
+
+        return isFull;
     }
 
     public boolean percolates() {
-        boolean percolates = false;
-        for (int i = 1; openedLastRowNodes[i] != -1; ++i) {
-            if (idsUF.find(topNode) == idsUF.find(openedLastRowNodes[i])) {
-                percolates = true;
-                break;
-            }
-        }
-
         return percolates;
     }
 }
