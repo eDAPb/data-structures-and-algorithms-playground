@@ -3,13 +3,13 @@ package edapb.algorithms.assignment1;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    private static final int open = 1;
+    private static final int OPEN = 1;
     private final int sideLength;
     private final int topNode;
-    private final int bottomNode;
 
     private final WeightedQuickUnionUF idsUF;
-    private final int[] status;
+    private final byte[] status;
+    private final int[] openedLastRowNodes;
     private int numOfOpenSites;
 
     public Percolation(final int n) {
@@ -18,17 +18,21 @@ public class Percolation {
         }
 
         // Using one dimensional array as grid.
-        final int size = n * n + 2;
+        final int size = n * n + 1;
+        sideLength = n;
         idsUF = new WeightedQuickUnionUF(size);
-        status = new int[size];
+        status = new byte[size];
+        // We will track opened bottom nodes and check if they are full to
+        // confirm for percolation later. First index reserved for counting.
+        openedLastRowNodes = new int[n + 1];
+        for (int i = 1; i < openedLastRowNodes.length; ++i) {
+            openedLastRowNodes[i] = -1;
+        }
         numOfOpenSites = 0;
 
-        // Spawn top and bottom virtual nodes.
-        sideLength = n;
+        // Spawn top virtual node.
         topNode = 0;
-        status[topNode] = open;
-        bottomNode = n * n + 1;
-        status[bottomNode] = open;
+        status[topNode] = OPEN;
     }
 
     private boolean inRange(int row, int col) {
@@ -46,8 +50,8 @@ public class Percolation {
             return topNode;
         }
 
-        if (row == sideLength + 1) {
-            return bottomNode;
+        if (!inRange(row, col)) {
+            return -1;
         }
 
         // First element is at (1, 1) -> arr[1]
@@ -61,24 +65,29 @@ public class Percolation {
 
         int[] indexes = new int[5];
         indexes[0] = toIndex(row, col);
-        status[indexes[0]] = open;
+        status[indexes[0]] = OPEN;
         ++numOfOpenSites;
 
-        // Check top, bottom, left, right for open nodes to connect to.
-        // Don't have to worry about going up or down since we'll hit top or
-        // bottom node no matter what.
+        // Check top, bottom, left, right for OPEN nodes to connect to.
+        // Makes sure they are in range by checking for -1
         // Up
         indexes[2] = toIndex(row - 1, col);
         // Down
         indexes[1] = toIndex(row + 1, col);
         // Right
-        indexes[3] = inRange(row, col + 1) ? toIndex(row, col + 1) : -1;
+        indexes[3] = toIndex(row, col + 1);
         // Left
-        indexes[4] = inRange(row, col - 1) ? toIndex(row, col - 1) : -1;
+        indexes[4] = toIndex(row, col - 1);
 
+        final int lastRow = (sideLength - 1) * sideLength;
+        final byte inArray = 2;
         for (int i : indexes) {
-            if (i != -1 && status[i] == open) {
+            if (i != -1 && status[i] >= OPEN) {
                 idsUF.union(i, indexes[0]);
+                if (status[i] != inArray && i > lastRow) {
+                    status[i] = inArray;
+                    openedLastRowNodes[++openedLastRowNodes[0]] = i;
+                }
             }
         }
     }
@@ -89,15 +98,23 @@ public class Percolation {
 
     public boolean isOpen(int row, int col) {
         enforceRange(row, col);
-        return status[toIndex(row, col)] == open;
+        return status[toIndex(row, col)] >= OPEN;
     }
 
     public boolean isFull(int row, int col) {
         enforceRange(row, col);
-        return idsUF.find(toIndex(row, col)) == idsUF.find(topNode);
+        return idsUF.find(topNode) == idsUF.find(toIndex(row, col));
     }
 
     public boolean percolates() {
-        return idsUF.find(topNode) == idsUF.find(bottomNode);
+        boolean percolates = false;
+        for (int i = 1; openedLastRowNodes[i] != -1; ++i) {
+            if (idsUF.find(topNode) == idsUF.find(openedLastRowNodes[i])) {
+                percolates = true;
+                break;
+            }
+        }
+
+        return percolates;
     }
 }
