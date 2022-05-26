@@ -12,7 +12,7 @@ public class Percolation {
     private final int nullNode;
 
     private final WeightedQuickUnionUF idsUF;
-    private final int[] status;
+    private final byte[] status;
     private boolean percolates;
     private int numOfOpenSites;
 
@@ -26,7 +26,7 @@ public class Percolation {
         sideLength = n;
         nullNode = 0;           // Serves as dummy node for incorrect access
         idsUF = new WeightedQuickUnionUF(size);
-        status = new int[size]; // Keep nullNode status as CLOSED = 0b000
+        status = new byte[size]; // Keep nullNode status as CLOSED = 0b000
     }
 
     private boolean inRange(int row, int col) {
@@ -57,13 +57,14 @@ public class Percolation {
         indexes[0] = toIndex(row, col);
 
         // Instead of using virtual nodes, status is defined by index
-        final int bottomRow = (sideLength - 1) * sideLength;
+        final int bottomRow = (sideLength - 1) * sideLength + 1;
+        status[indexes[0]] = OPEN;  // We use bitwise OR to avoid n = 1 bug
         if (indexes[0] <= sideLength) {
-            status[indexes[0]] = TOP_CONN;
-        } else if (indexes[0] > bottomRow) {
-            status[indexes[0]] = BOTTOM_CONN;
-        } else {
-            status[indexes[0]] = OPEN;
+            status[indexes[0]] = (byte) (status[indexes[0]] | TOP_CONN);
+        }
+
+        if (indexes[0] >= bottomRow) {
+            status[indexes[0]] = (byte) (status[indexes[0]] | BOTTOM_CONN);
         }
         ++numOfOpenSites;
 
@@ -89,7 +90,7 @@ public class Percolation {
         }
 
         // Update only the new root as we created a new huge tree
-        status[idsUF.find(indexes[0])] = newStatus;
+        status[idsUF.find(indexes[0])] = (byte) newStatus;
 
         if (newStatus == PERCOLATION) { // TOP_CONN and BOTTOM_CONN merged
             percolates = true;

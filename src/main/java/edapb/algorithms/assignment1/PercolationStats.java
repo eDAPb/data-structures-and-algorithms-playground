@@ -20,8 +20,9 @@ public class PercolationStats {
 
             while (!perc.percolates()) {
                 perc.open(StdRandom.uniform(1, n + 1),
-                          StdRandom.uniform(1, n + 1));
+                            StdRandom.uniform(1, n + 1));
             }
+            System.out.println("----------------");
 
             thresholds[t] = (double)perc.numberOfOpenSites() / (n * n);
         }
