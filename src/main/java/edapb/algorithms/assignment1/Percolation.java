@@ -89,7 +89,7 @@ public class Percolation {
             }
         }
 
-        // Update only the new root as we created a new huge tree
+        // Update only the new root because we created a new huge tree
         status[idsUF.find(indexes[0])] = (byte) newStatus;
 
         if (newStatus == PERCOLATION) { // TOP_CONN and BOTTOM_CONN merged
