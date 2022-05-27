@@ -38,6 +38,7 @@ public class Percolation {
             throw new IllegalArgumentException();
         }
     }
+
     private int toIndex(int row, int col) {
         if (!inRange(row, col)) {
             return nullNode;
@@ -75,10 +76,10 @@ public class Percolation {
         indexes[4] = toIndex(row, col - 1); // Left
 
         // Merge roots adjacent status with bitwise OR
-        int newStatus = status[indexes[0]];
+        byte newStatus = status[indexes[0]];
         for (int i : indexes) {
             if (status[i] >= OPEN) { // Ignore CLOSED nodes (nullNode, etc.)
-                newStatus = newStatus | status[idsUF.find(i)];
+                newStatus = (byte) (newStatus | status[idsUF.find(i)]);
             }
         }
 
@@ -90,7 +91,7 @@ public class Percolation {
         }
 
         // Update only the new root because we created a new huge tree
-        status[idsUF.find(indexes[0])] = (byte) newStatus;
+        status[idsUF.find(indexes[0])] = newStatus;
 
         if (newStatus == PERCOLATION) { // TOP_CONN and BOTTOM_CONN merged
             percolates = true;
