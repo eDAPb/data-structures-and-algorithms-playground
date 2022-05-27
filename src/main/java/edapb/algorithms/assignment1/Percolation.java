@@ -6,7 +6,7 @@ public class Percolation {
     private static final int OPEN = 0b100;
     private static final int TOP_CONN = 0b110;
     private static final int BOTTOM_CONN = 0b101;
-    private static final int PERCOLATION = 0b0111;
+    private static final int PERCOLATION = 0b111;
 
     private final int sideLength;
     private final int nullNode;
